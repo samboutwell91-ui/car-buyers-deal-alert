@@ -1,5 +1,5 @@
 // api/generate_email.js
-import fetch from 'node-fetch';
+
 
 export default async function handler(req, res) {
   try {
