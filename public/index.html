@@ -16,7 +16,7 @@
 
     <form id="signup">
       <input name="email" type="email" required placeholder="you@example.com" />
-      <input name="zip" type="text" required placeholder="ZIP code (e.g. 63101)" pattern="\\d{5}" />
+      <input name="zip" type="text" required placeholder="ZIP code (e.g. 63101)" pattern="[0-9]{5}" maxlength="5" title="Enter a 5-digit ZIP code" />
       <button type="submit">Subscribe</button>
     </form>
 
