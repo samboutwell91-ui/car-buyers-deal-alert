@@ -1,5 +1,5 @@
 // api/subscribe.js
-import fetch from 'node-fetch';
+
 
 const AIRTABLE_BASE = process.env.AIRTABLE_BASE_ID;
 const AIRTABLE_KEY = process.env.AIRTABLE_API_KEY;
