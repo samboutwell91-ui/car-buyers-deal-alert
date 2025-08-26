@@ -1,0 +1,14 @@
+name: Weekly DealAlert Send
+on:
+  schedule:
+    # Thursday at 13:00 UTC => 8:00 AM CT (adjust if needed)
+    - cron: '0 13 * * 4'
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel send endpoint
+        run: |
+          curl -s -X POST "https://YOUR_DEPLOYED_DOMAIN/api/send_weekly" -H "x-cron-secret: ${{ secrets.CRON_SECRET }}"
