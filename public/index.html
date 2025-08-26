@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Car Buyers' Deal Alert</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      body { font-family: Arial, sans-serif; padding: 32px; max-width: 720px; margin: auto; }
+      input, button { padding: 10px; margin: 6px 0; width: 100%; box-sizing: border-box; }
+      .small { font-size: 0.9em; color: #666; }
+    </style>
+  </head>
+  <body>
+    <h1>Car Buyers' Deal Alert</h1>
+    <p>Enter your email and ZIP code to receive weekly local manufacturer incentives delivered every Thursday.</p>
+
+    <form id="signup">
+      <input name="email" type="email" required placeholder="you@example.com" />
+      <input name="zip" type="text" required placeholder="ZIP code (e.g. 63101)" pattern="\\d{5}" />
+      <button type="submit">Subscribe</button>
+    </form>
+
+    <div id="message" class="small"></div>
+
+    <script>
+      document.getElementById('signup').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const f = e.target;
+        const payload = { email: f.email.value.trim(), zip: f.zip.value.trim() };
+        document.getElementById('message').innerText = 'Saving...';
+        try {
+          const r = await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const j = await r.json();
+          if (r.ok && j.ok) {
+            document.getElementById('message').innerText = 'Thanks — check your email for confirmation!';
+            f.reset();
+          } else {
+            document.getElementById('message').innerText = 'Error: ' + (j.error ? JSON.stringify(j.error) : 'unknown');
+          }
+        } catch (err) {
+          document.getElementById('message').innerText = 'Network error: ' + err.message;
+        }
+      });
+    </script>
+  </body>
+</html>
