@@ -1,0 +1,14 @@
+{
+  "name": "car-buyers-deal-alert",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "node-fetch": "^3.4.1"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
