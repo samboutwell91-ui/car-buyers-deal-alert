@@ -39,8 +39,19 @@ ${JSON.stringify(incentives, null, 2)}
     console.log('DEBUG_OPENAI_RESPONSE_STATUS:', resp.status);
     console.log('DEBUG_OPENAI_RESPONSE:', JSON.stringify(data));
 
-    const html = data?.choices?.[0]?.message?.content || '<p>Error generating content</p>';
-    return res.status(200).json({ html });
+let raw = data?.choices?.[0]?.message?.content || '<p>Error generating content</p>';
+
+// strip Markdown fences like ```html ... ```
+raw = raw.replace(/```html?/gi, '```'); // normalize ```html -> ```
+if (raw.includes('```')) {
+  const m = raw.match(/```([\s\S]*?)```/);
+  if (m && m[1]) raw = m[1].trim();
+}
+
+// optional: light cleanup
+const html = raw.trim();
+return res.status(200).json({ html });
+
   } catch (err) {
     console.error('generate_email error:', err);
     return res.status(500).json({ error: err.message || 'server error' });
